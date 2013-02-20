@@ -16,7 +16,7 @@ function doSearch(){
   $.getJSON('/search/?query='+searchString, function(data) {
     // console.log(data);
     $.each(data, function(index, value){
-      console.log(value);
+      // console.log(value);
       value = value.replace("pad:", "");
       $("#searchResults").append("<a href='/p/"+value+"'>"+value+"</a>");
     });
