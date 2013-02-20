@@ -1,11 +1,11 @@
 {
-  "name": "ep_email_notifications",
-  "description": "Subscribe to a pad and recieve an email when someone edits your pad",
-  "version": "0.0.5",
+  "name": "ep_search",
+  "description": "Search through all pads for a string",
+  "version": "0.0.1",
   "author": {
-    "name": "johnyma22",
+    "name": "John McLear",
     "email": "john@mclear.co.uk",
-    "url": "John McLear"
+    "url": "http://mclear.co.uk"
   },
   "contributors": [],
   "dependencies": {

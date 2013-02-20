@@ -1,16 +1,12 @@
 {
   "parts":[
     {
-      "name": "ep_email_notifications",
+      "name": "ep_search",
       "hooks": {
-        "padUpdate": "ep_email_notifications/update",
-        "handleMessage": "ep_email_notifications/handleMessage",
-        "eejsBlock_scripts": "ep_email_notifications/client",
-        "eejsBlock_embedPopup": "ep_email_notifications/client:eejsBlock_embedPopup"
+        "expressCreateServer" : "ep_search/index:registerRoute",
+        "eejsBlock_indexWrapper": "ep_search/client"
       },
       "client_hooks": {
-        "postAceInit":"ep_email_notifications/static/js/ep_email:postAceInit",
-        "handleClientMessage_emailSubscriptionSuccess":"ep_email_notifications/static/js/ep_email"
       }
     }
   ]
