@@ -1,7 +1,6 @@
-// Main job is to check pads periodically for activity and notify owners when someone begins editing and when someone finishes.
- var  db = require('../../src/node/db/DB').db,
-   async = require('../../src/node_modules/async'),
-settings = require('../../src/node/utils/Settings');
+// Main job is to check pads periodically for activity and notify owners when someone begins editing and when someone finishes. 
+var db = require('ep_etherpad-lite/node/db/DB').db;
+var async = require('ep_etherpad-lite/node_modules/async');
 
 // Settings -- EDIT THESE IN settings.json not here..
 // var pluginSettings = settings.ep_search;
@@ -12,7 +11,6 @@ exports.registerRoute = function (hook_name, args, cb) {
   args.app.get('/search', function(req, res) {
 
     var searchString = req.query["query"];
-    searchString = escapeRegExp(searchString);
     var result = {};
 
     db.findKeys("pad:*", "*:*:*", function(err, pads){ // get all pads
