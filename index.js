@@ -20,7 +20,7 @@ exports.registerRoute = function (hook_name, args, cb) {
         db.get(pad, function(err, padData){ // get the pad contents
           var padText = padData.atext.text || "";
           // does searchString exist in aText?
-          if (padText.toLowerCase().indexOf(searchString) !== -1) {
+          if (padText.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
             result.pad = pad;
           }
           callback();
