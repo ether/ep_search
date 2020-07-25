@@ -1,15 +1,14 @@
 {
   "name": "ep_search",
   "description": "Search through all pads for a string",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": {
     "name": "John McLear",
     "email": "john@mclear.co.uk",
     "url": "http://mclear.co.uk"
   },
   "contributors": [],
-  "dependencies": {
-  },
+  "dependencies": {},
   "engines": {
     "node": ">= 0.4.1"
   }
