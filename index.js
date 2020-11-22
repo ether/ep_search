@@ -26,4 +26,5 @@ exports.registerRoute = function (hook_name, args, cb) {
       });
     });
   });
+  cb(null);
 };
