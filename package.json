@@ -1,7 +1,7 @@
 {
   "name": "ep_search",
   "description": "Search through all pads for a string",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "author": {
     "name": "John McLear",
     "email": "john@mclear.co.uk",
