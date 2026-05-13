@@ -55,7 +55,7 @@ const runSearch = async (plugin, query) => {
     },
   }, NO_OP);
 
-  return await new Promise((resolve) => {
+  return new Promise((resolve) => {
     handler({query: {query}}, {
       json: (body) => resolve(body),
     });
