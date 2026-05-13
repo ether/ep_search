@@ -5,6 +5,7 @@ const Module = require('node:module');
 const path = require('node:path');
 
 const indexPath = path.join(__dirname, '..', 'index.js');
+const NO_OP = () => {};
 
 const loadPlugin = (pads) => {
   let findKeysCalls = 0;
@@ -17,10 +18,10 @@ const loadPlugin = (pads) => {
   };
   const fakeAsync = {
     forEachSeries: (items, iterator, done) => {
-      let i = 0;
+      let itemIndex = 0;
       const next = (err) => {
-        if (err != null || i >= items.length) return done(err);
-        iterator(items[i++], next);
+        if (err != null || itemIndex >= items.length) return done(err);
+        iterator(items[itemIndex++], next);
       };
       next();
     },
@@ -52,7 +53,7 @@ const runSearch = async (plugin, query) => {
         handler = routeHandler;
       },
     },
-  }, () => {});
+  }, NO_OP);
 
   return await new Promise((resolve) => {
     handler({query: {query}}, {
