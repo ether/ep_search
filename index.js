@@ -11,21 +11,25 @@ const async = require('ep_etherpad-lite/node_modules/async');
 
 exports.registerRoute = (hookName, args, cb) => {
   args.app.get('/search', (req, res) => {
-    const searchString = req.query.query;
-    const result = {};
+    const searchString = (req.query.query || '').toLowerCase();
+    const result = [];
+
+    if (!searchString) {
+      return res.json(result);
+    }
 
     db.findKeys('pad:*', '*:*:*', (err, pads) => { // get all pads
       async.forEachSeries(pads, (pad, callback) => {
         db.get(pad, (err, padData) => { // get the pad contents
-          const padText = padData.atext.text || '';
+          const padText = padData?.atext?.text || '';
           // does searchString exist in aText?
-          if (padText.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
-            result.pad = pad;
+          if (padText.toLowerCase().indexOf(searchString) !== -1) {
+            result.push(pad);
           }
           callback();
         });
       }, (err) => {
-        res.send(JSON.stringify(result));
+        res.json(result);
       });
     });
   });
