@@ -1,14 +1,13 @@
 import {expect, test} from '@playwright/test';
-import {getPadBody, goToNewPad} from 'ep_etherpad-lite/tests/frontend-new/helper/padHelper';
 
 test.beforeEach(async ({page}) => {
-  await goToNewPad(page);
+  await page.goto('http://localhost:9001/');
 });
 
 test.describe('ep_search', () => {
-  test('pad loads with plugin installed', async ({page}) => {
-    const padBody = await getPadBody(page);
-    await expect(padBody).toBeVisible();
+  test('index page renders the search panel', async ({page}) => {
+    await expect(page.locator('#ep-search-panel')).toBeVisible();
+    await expect(page.locator('#ep-search-input')).toBeVisible();
   });
 
   test('renders search results as a proper list of links', async ({page}) => {
@@ -20,6 +19,7 @@ test.describe('ep_search', () => {
       });
     });
 
+    await expect(page.locator('#ep-search-input')).toBeVisible();
     await page.locator('#ep-search-input').fill('needle');
     await page.locator('#ep-search-submit').click();
 

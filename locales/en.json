@@ -5,7 +5,7 @@
   "ep_search.placeholder": "Search all pads",
   "ep_search.submit": "Search",
   "ep_search.searching": "Searching...",
-  "ep_search.results": "Matching pads: {count}",
+  "ep_search.results": "Matching pads: {{count}}",
   "ep_search.noResults": "No matching pads found.",
   "ep_search.error": "Search failed. Please try again."
 }
