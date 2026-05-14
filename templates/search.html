@@ -1,29 +1,103 @@
-<script src="/static/js/jquery.js"></script>
-<br/>
-<label for="searchInput"><h2>Search:</h2></label>
-<form id="searchForm">
-<input id="searchInput" type="text">
-<input type="submit">
-</form>
-<div id="searchResults"></div>
+<link rel="stylesheet" type="text/css" href="/static/plugins/ep_search/static/css/search.css">
 
-<script type="text/javascript">
-$('#searchForm').keyup(function(){
-  $("#searchResults").html("");
-  doSearch();
-});
+<section id="ep-search-panel" class="ep-search-panel">
+  <div class="ep-search-panel__header">
+    <h2 data-l10n-id="ep_search.heading">Search pads</h2>
+    <p data-l10n-id="ep_search.help">Find pads containing the text you enter.</p>
+  </div>
 
-function doSearch(){
-  var searchString = $("#searchInput").val();
-  $("#searchResults").html("");
-  $.getJSON('/search/?query='+searchString, function(data) {
-    // console.log(data);
-    $.each(data, function(index, value){
-      // console.log(value);
-      value = value.replace("pad:", "");
-      value = encodeURI(value);
-      $("#searchResults").append("<a href='/p/"+value+"'>"+value+"</a>");
+  <form id="ep-search-form" class="ep-search-panel__form" role="search">
+    <label for="ep-search-input" data-l10n-id="ep_search.label">Search query</label>
+    <div class="ep-search-panel__controls">
+      <input id="ep-search-input" type="search" autocomplete="off"
+             data-l10n-id="ep_search.placeholder" data-l10n-attr="placeholder"
+             placeholder="Search all pads">
+      <button id="ep-search-submit" type="submit" data-l10n-id="ep_search.submit">Search</button>
+    </div>
+  </form>
+
+  <p id="ep-search-status" class="ep-search-panel__status" aria-live="polite"></p>
+  <ul id="ep-search-results" class="ep-search-panel__results"></ul>
+</section>
+
+<script>
+(() => {
+  if (window.__epSearchInitialized) return;
+  window.__epSearchInitialized = true;
+
+  const form = document.getElementById('ep-search-form');
+  const input = document.getElementById('ep-search-input');
+  const submit = document.getElementById('ep-search-submit');
+  const status = document.getElementById('ep-search-status');
+  const results = document.getElementById('ep-search-results');
+  if (!form || !input || !submit || !status || !results) return;
+
+  const t = (key, values = {}) => {
+    if (window.html10n && typeof window.html10n.get === 'function') {
+      return window.html10n.get(key, values);
+    }
+    return key;
+  };
+
+  const clearResults = () => {
+    results.replaceChildren();
+  };
+
+  const setStatus = (message) => {
+    status.textContent = message || '';
+    status.hidden = !message;
+  };
+
+  const renderResults = (pads) => {
+    clearResults();
+    pads.forEach((padKey) => {
+      const padId = String(padKey).replace(/^pad:/, '');
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `/p/${encodeURIComponent(padId)}`;
+      link.textContent = padId;
+      item.append(link);
+      results.append(item);
     });
+  };
+
+  let activeRequest = 0;
+
+  const runSearch = async () => {
+    const query = input.value.trim();
+    const requestId = ++activeRequest;
+    if (!query) {
+      clearResults();
+      setStatus('');
+      submit.disabled = false;
+      return;
+    }
+
+    setStatus(t('ep_search.searching'));
+    submit.disabled = true;
+    try {
+      const params = new URLSearchParams({query});
+      const response = await fetch(`/search/?${params.toString()}`);
+      if (!response.ok) throw new Error(`Search failed: ${response.status}`);
+      const pads = await response.json();
+      if (requestId !== activeRequest) return;
+      renderResults(pads);
+      setStatus(pads.length > 0
+        ? t('ep_search.results', {count: pads.length})
+        : t('ep_search.noResults'));
+    } catch (err) {
+      if (requestId !== activeRequest) return;
+      clearResults();
+      setStatus(t('ep_search.error'));
+    } finally {
+      if (requestId === activeRequest) submit.disabled = false;
+    }
+  };
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void runSearch();
   });
-}
+
+})();
 </script>

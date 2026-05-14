@@ -1,0 +1,11 @@
+{
+  "ep_search.heading": "Search pads",
+  "ep_search.help": "Find pads containing the text you enter.",
+  "ep_search.label": "Search query",
+  "ep_search.placeholder": "Search all pads",
+  "ep_search.submit": "Search",
+  "ep_search.searching": "Searching...",
+  "ep_search.results": "Matching pads: {count}",
+  "ep_search.noResults": "No matching pads found.",
+  "ep_search.error": "Search failed. Please try again."
+}

@@ -1,0 +1,79 @@
+.ep-search-panel {
+  margin: 1rem auto;
+  max-width: 52rem;
+  padding: 1rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.ep-search-panel__header {
+  margin-bottom: 0.75rem;
+}
+
+.ep-search-panel__header h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.ep-search-panel__header p,
+.ep-search-panel__status {
+  margin: 0;
+  color: #555;
+}
+
+.ep-search-panel__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ep-search-panel__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.ep-search-panel__controls input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.ep-search-panel__controls button {
+  align-self: flex-start;
+  padding: 0.55rem 1rem;
+  border: 1px solid #1863a1;
+  border-radius: 6px;
+  background: #1f7ac9;
+  color: #fff;
+  cursor: pointer;
+}
+
+.ep-search-panel__controls button[type="submit"] {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+.ep-search-panel__controls button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.ep-search-panel__results {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.ep-search-panel__results li + li {
+  margin-top: 0.35rem;
+}
+
+.ep-search-panel__results a {
+  overflow-wrap: anywhere;
+}
